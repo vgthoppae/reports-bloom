@@ -7,7 +7,9 @@ export default function Color({
   title,
   color,
   rating,
+  selectedStars,
   onRemove = (f) => f,
+  onRateColor = (f) => f,
 }) {
   return (
     <section>
@@ -18,7 +20,7 @@ export default function Color({
       </button>
 
       <div style={{ height: 50, backgroundColor: color }} />
-      <CompStarRating selectedStars={rating} />
+      <CompStarRating selectedStars={selectedStars?selectedStars:rating} onRate={onRateColor}/>
     </section>
   );
 }
