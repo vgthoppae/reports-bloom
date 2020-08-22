@@ -1,19 +1,21 @@
-import React, {useState} from 'react'
-import useInput from './hooks/useInput'
+import React, { useState } from 'react';
+import useInput from './hooks/useInput';
+import { useColors } from './ColorProvider';
 
-export default function AddColorForm({onNewColor = f => f}) {
+export default function AddColorForm() {
   // const [title, setTitle] = useState("")
   // const [color, setColor] = useState("#000000")
 
-  const [titleProps, resetTitle] = useInput("")
-  const [colorProps, resetColor] = useInput("#000000")  
+  const [titleProps, resetTitle] = useInput('');
+  const [colorProps, resetColor] = useInput('#000000');
+  const { addColor } = useColors();
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
-    onNewColor(titleProps.value, colorProps.value)
-    resetTitle("")
-    resetColor("")
-  }
+    addColor(titleProps.value, colorProps.value);
+    resetTitle('');
+    resetColor('');
+  };
 
   // return (
   //   <form onSubmit={submit}>
@@ -25,9 +27,14 @@ export default function AddColorForm({onNewColor = f => f}) {
 
   return (
     <form onSubmit={submit}>
-      <input type="text" {...titleProps} placeholder="color title..." required/>
-      <input type="text" {...colorProps} required/>
+      <input
+        type="text"
+        {...titleProps}
+        placeholder="color title..."
+        required
+      />
+      <input type="text" {...colorProps} required />
       <button>ADD</button>
     </form>
-  )  
+  );
 }
