@@ -17,7 +17,7 @@ export default function Color({ id, title, color, rating }) {
 
       <CompStarRating
         selectedStars={rating}
-        onRate={(rating) => rateColor(id, rating)}
+        onRate={(rating) => rateColor(id, rating + 1)}
       />
     </section>
   );

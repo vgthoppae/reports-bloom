@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import colorData from '../data/color-data.json';
 import { v4 } from 'uuid';
 
@@ -22,12 +22,20 @@ export default function ColorProvider({ children }) {
   };
 
   const rateColor = (id, rating) => {
-    colors.map((color) => (color.id === id ? { ...color, rating } : color));
+    const newColors = colors.map((color) =>
+      color.id === id ? { ...color, rating } : color
+    );
+    setColors(newColors);
   };
 
   const removeColor = (id) => {
     setColors(colors.filter((color) => color.id !== id));
   };
+
+  useEffect(() => {
+    const msg = colors.map(({ title, rating }) => `${title}-${rating}`);
+    alert(msg.join('\n'));
+  });
 
   return (
     <ColorContext.Provider value={{ colors, addColor, removeColor, rateColor }}>
