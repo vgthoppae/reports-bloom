@@ -4,9 +4,11 @@
   "description": "",
   "main": "src/index.js",
   "dependencies": {
+    "faker": "^5.1.0",
     "react": "16.8.0",
     "react-dom": "16.8.0",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.0.1",
+    "react-window": "^1.8.5"
   },
   "scripts": {
     "start": "react-scripts start",
