@@ -1,0 +1,23 @@
+mutation createStatusEntry {
+  createStatusEntry(input: {
+    period: "09-30-2020,
+    userId: "Sai"
+    description: "Build a serverless API with Amplify and GraphQL"
+  }) {
+    period
+    userId
+    name
+    description
+  }
+}
+
+query listStatusEntrys {
+  listStatusEntrys {
+    items {
+    period
+    userId
+    name
+    description
+    }
+  }
+}
