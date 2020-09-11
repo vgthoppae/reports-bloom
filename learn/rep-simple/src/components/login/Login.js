@@ -19,7 +19,9 @@ const tailLayout = {
 };
 
 const Login = (props) => {
-  if (props.user) props.history.push('/dashboard');
+  console.log('rendering Login now');
+
+  // if (props.user) props.history.push('/dashboard');
 
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -51,22 +53,23 @@ const Login = (props) => {
     console.log('Login Failure:', errorInfo);
   };
 
-  useLayoutEffect(() => {
-    console.log(`location is ${location.pathName}`);
-    async function doLogout() {
-      try {
-        await Auth.signOut();
-        console.log('Logged out');
-        props.setLoggedIn(undefined);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    console.log(location.pathname);
-    if (location.pathname === '/logout') {
-      doLogout();
-    }
-  }, [location]);
+  // useLayoutEffect(() => {
+  console.log(`location is ${location.pathName}`);
+  // async function doLogout() {
+  //   try {
+  //     await Auth.signOut();
+  //     console.log('Logged out');
+  //     // props.setUser(undefined);
+  //     console.log('setting user to undefined');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  // console.log(location.pathname);
+  // if (location.pathname === '/logout') {
+  //   doLogout();
+  // }
+  // }, [props, location]);
 
   return (
     <>

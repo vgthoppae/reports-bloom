@@ -1,25 +1,29 @@
 import React from 'react';
+import WithMenu from './WithMenu';
+import protectedRoute from './protectedRoute';
 
-const DownloadReports = ({ reportStatusFormFieldsValue }) => {
-  const getVals = (obj) => {
-    let val = '';
-    for (const [key, value] of Object.entries(obj)) {
-      val += `${key}: ${value}`;
-    }
-    return val;
-  };
+const DownloadReports = (props) => {
+  console.log('rendering DownloadReports now');
+
+  // const getVals = (obj) => {
+  //   let val = '';
+  //   for (const [key, value] of Object.entries(obj)) {
+  //     val += `${key}: ${value}`;
+  //   }
+  //   return val;
+  // };
 
   return (
     <>
       <h1>Download Reports here...</h1>
-      <p>
+      {/* <p>
         {}
-        {reportStatusFormFieldsValue
-          ? getVals(reportStatusFormFieldsValue)
+        {props.reportStatusFormFieldsValue
+          ? getVals(props.reportStatusFormFieldsValue)
           : ''}
-      </p>
+      </p> */}
     </>
   );
 };
 
-export default DownloadReports;
+export default protectedRoute(WithMenu(DownloadReports));

@@ -7,6 +7,7 @@ import {
   fetchStatusEntries,
   addStatusEntry,
 } from '../service/StatusEntryService';
+import WithMenu from './WithMenu';
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -29,17 +30,17 @@ const tailLayout = {
 
 const dateFormat = 'DD-MMM-YYYY';
 
-let i = 1;
-
 const ReportStatus = ({
   user,
   reportStatusFormFieldsValue,
   setReportStatusFormFieldsValue,
 }) => {
+  console.log('rendering ReportStatus now');
+
   let location = useLocation();
   const [form] = Form.useForm();
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const username = user.username;
+  const username = user ? user.username : undefined;
 
   useEffect(() => {
     console.log(`location is ${location.pathname}`);
@@ -50,7 +51,6 @@ const ReportStatus = ({
   };
 
   async function onFinish(vals) {
-    i += 1;
     try {
       const {
         period,
@@ -127,13 +127,14 @@ const ReportStatus = ({
         initialValues={{
           remember: true,
           period: getCurrentWeekPeriod(),
+          currentWeek: 'true',
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         form={form}
       >
         <Form.Item label="Current Week?" name="currentWeek" required>
-          <Radio.Group defaultValue="true" onChange={weekChange}>
+          <Radio.Group onChange={weekChange}>
             <Radio value="true">Yes</Radio>
             <Radio value="false">No</Radio>
           </Radio.Group>
@@ -181,4 +182,4 @@ const ReportStatus = ({
   );
 };
 
-export default protectedRoute(ReportStatus);
+export default protectedRoute(WithMenu(ReportStatus));

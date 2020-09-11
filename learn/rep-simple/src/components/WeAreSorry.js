@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Alert, PageHeader } from 'antd';
 
 const WeAreSorry = ({ content }) => {

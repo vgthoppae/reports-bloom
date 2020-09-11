@@ -2,16 +2,23 @@ import React from 'react';
 import { Menu, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
-const UserDropdown = () => {
+const UserDropdown = (props) => {
+  const handleClick = (e) => {
+    props.doLogout();
+  };
+
   const userMenu = (
     <Menu>
       <Menu.Item key="1">Settings</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3">
-        <a href="/#/logout">Sign Out</a>
+        <a href="/#/logout" onClick={handleClick}>
+          Sign Out
+        </a>
       </Menu.Item>
     </Menu>
   );
+
   return (
     <div>
       <Dropdown.Button
