@@ -115,12 +115,12 @@ const ReportController = (props) => {
             path="/downloadReports"
             render={(props) => (
               <DownloadReports
+                {...props}
                 user={user}
                 doLogout={doLogout}
                 selectedMenu={selectedMenu}
                 setSelectedMenu={(m) => setSelectedMenu(m)}
                 reportStatusFormFieldsValue={reportStatusFormVals}
-                {...props}
               />
             )}
           />
