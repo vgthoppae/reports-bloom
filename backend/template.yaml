@@ -2,10 +2,13 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   reports-bloom-onboard-app
-  
+
 Globals:
   Function:
     Timeout: 30
+    Environment:
+      Variables:
+        lifecycle: dev
 
 Resources:
   DomainCheckFunction:
@@ -20,12 +23,12 @@ Resources:
     Properties:
       CodeUri: functions
       Handler: route53events.lambdaHandler
-      Runtime: nodejs12.x      
+      Runtime: nodejs12.x
 
 Outputs:
   DomainCheckFunction:
-    Description: "Domain Check Lambda Function ARN"
+    Description: 'Domain Check Lambda Function ARN'
     Value: !GetAtt DomainCheckFunction.Arn
   DomainCheckFunctionIamRole:
-    Description: "Implicit IAM Role created for Domain Check function"
+    Description: 'Implicit IAM Role created for Domain Check function'
     Value: !GetAtt DomainCheckFunction.Arn
