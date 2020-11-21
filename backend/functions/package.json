@@ -1,0 +1,19 @@
+{
+  "name": "repbloom_onboard",
+  "version": "1.0.0",
+  "description": "Reports Bloom onboard app",
+  "main": "app.js",
+  "repository": "",
+  "author": "vgthoppae",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
+}
