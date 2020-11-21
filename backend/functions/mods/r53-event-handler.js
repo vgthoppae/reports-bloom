@@ -1,17 +1,17 @@
 const ssm = require('./ssm-param-store')
 
-exports.handleCreateHostedZone = (event) => {
+const handleCreateHostedZone = async (event) => {
   const hostedZone = event.detail.responseElements.hostedZone
   const key = "/HostedZoneConfig/Dev/id"
   const index = hostedZone.id.lastIndexOf("/")
-  const value = hostedZone.id.substring(index)
-  ssm.storeParam(key, value)
+  const value = hostedZone.id.substring(index + 1)
+  ssm.storeParam(key, value, "repbloom")
 }
 
-exports.getHandler = (event) => {
+exports.handleEvent = async (event) => {
   if (event.detail.eventSource === 'route53.amazonaws.com'  &&
       event.detail.eventName === 'CreateHostedZone') {
-        return handleCreateHostedZone;
+        handleCreateHostedZone(event);
   }
 
 }
