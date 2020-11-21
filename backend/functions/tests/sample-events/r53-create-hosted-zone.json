@@ -1,0 +1,68 @@
+{
+    "version": "0",
+    "id": "fbb859ef-7993-2d10-6b1d-b570350bd770",
+    "detail-type": "AWS API Call via CloudTrail",
+    "source": "aws.route53",
+    "account": "770382975654",
+    "time": "2020-11-20T20:11:03Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+        "eventVersion": "1.05",
+        "userIdentity": {
+            "type": "IAMUser",
+            "principalId": "AIDA3GXTHKKTGLHAD2SUU",
+            "arn": "arn:aws:iam::770382975654:user/vthoppae",
+            "accountId": "770382975654",
+            "accessKeyId": "ASIA3GXTHKKTKR7L6K3C",
+            "userName": "vthoppae",
+            "sessionContext": [
+                "Object"
+            ]
+        },
+        "eventTime": "2020-11-20T20:11:03Z",
+        "eventSource": "route53.amazonaws.com",
+        "eventName": "CreateHostedZone",
+        "awsRegion": "us-east-1",
+        "sourceIPAddress": "73.132.92.34",
+        "userAgent": "aws-internal/3 aws-sdk-java/1.11.893 Linux/4.9.217-0.3.ac.206.84.332.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.272-b10 java/1.8.0_272 vendor/Oracle_Corporation",
+        "requestParameters": {
+            "name": "brainbloomapps.com",
+            "callerReference": "1931d4db-eef6-4c6c-9998-602fee95bbd8",
+            "hostedZoneConfig": {
+              "comment": "",
+              "privateZone": false
+            }
+        },
+        "responseElements": {
+          "hostedZone": {
+              "id": "/hostedzone/Z06961402MPFNCDE2M7A6",
+              "name": "brainbloomapps.com.",
+              "callerReference": "1931d4db-eef6-4c6c-9998-602fee95bbd8",
+              "config": {
+                  "comment": "",
+                  "privateZone": false
+              },
+              "resourceRecordSetCount": 2
+          },
+          "changeInfo": {
+              "id": "/change/C057082131O6OH899Z6TY",
+              "status": "PENDING",
+              "submittedAt": "Nov 20, 2020 8:11:03 PM"
+          },
+          "delegationSet": {
+              "nameServers": [
+                  "ns-32.awsdns-04.com",
+                  "ns-1589.awsdns-06.co.uk",
+                  "ns-989.awsdns-59.net",
+                  "ns-1123.awsdns-12.org"
+              ]
+          },
+          "location": "https://route53.amazonaws.com/2013-04-01/hostedzone/Z06961402MPFNCDE2M7A6"
+      },
+        "requestID": "63659e0f-e9aa-4d67-bcf9-cc94fe8a329f",
+        "eventID": "b748554c-27ef-4055-a0de-bbcb19aa751e",
+        "eventType": "AwsApiCall",
+        "apiVersion": "2013-04-01"
+    }
+}
