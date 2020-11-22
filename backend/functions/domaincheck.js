@@ -1,36 +1,36 @@
-const route53 = require('./mods/route53')
+const route53 = require('./mods/route53');
+const val = require('./mods/vaidate-domain-check');
 
+let response,
+  statusCode = 200,
+  message;
 
-let response;
-
-/**
- *
- * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
- * @param {Object} event - API Gateway Lambda Proxy Input Format
- *
- * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html 
- * @param {Object} context
- *
- * Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
- * @returns {Object} object - API Gateway Lambda Proxy Output Format
- * 
- */
 exports.lambdaHandler = async (event, context) => {
-    try {
-        console.log(event);
-        // const ret = await axios(url);
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: 'about to check the domain',
-                // location: ret.data.trim()
-            })
-        }
-        route53.recordExists(event.queryStringParameters.subDomain);
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
+  try {
+    console.log(event);
+    const err = val.checkRequest(event);
 
-    return response
+    if (err) {
+      statusCode = 400;
+      message = err;
+    } else {
+      message = await route53.recordExists(
+        event.queryStringParameters.fullDomainName
+      );
+    }
+  } catch (err) {
+    statusCode = 500;
+    message = 'Internal Server Error';
+    console.log(err);
+    return err;
+  }
+
+  response = {
+    statusCode,
+    body: JSON.stringify({
+      message,
+    }),
+  };
+
+  return response;
 };

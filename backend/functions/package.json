@@ -10,9 +10,10 @@
     "aws-sdk": "^2.797.0"
   },
   "scripts": {
-    "test": "mocha tests/unit/"
+    "test": "mocha test/unit/"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "mocha": "^6.1.4"
   }

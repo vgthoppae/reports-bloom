@@ -5,7 +5,7 @@
   "httpMethod": "GET",
   "isBase64Encoded": true,
   "queryStringParameters": {
-    "subDomain": "options"
+    "fullDomainName": "options1.brainbloomapps.com"
   },
   "multiValueQueryStringParameters": {
     "foo": [
