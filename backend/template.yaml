@@ -3,12 +3,19 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   reports-bloom-onboard-app
 
+Parameters:
+  lifecycle:
+    Type: String
+    Default: dev
+
 Globals:
   Function:
     Timeout: 30
+    Runtime: nodejs12.x
     Environment:
       Variables:
-        lifecycle: dev
+        lifecycle: !Ref lifecycle
+        region: us-east-1
 
 Resources:
   DomainCheckFunction:
@@ -16,14 +23,23 @@ Resources:
     Properties:
       CodeUri: functions
       Handler: domaincheck.lambdaHandler
-      Runtime: nodejs12.x
 
   Route53EventsFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: functions
       Handler: route53events.lambdaHandler
-      Runtime: nodejs12.x
+      Policies:
+        - Statement:
+            - Sid: SSMGetParameterPolicy
+              Effect: Allow
+              Action:
+                - ssm:PutParameter
+                - ssm:PutParameters
+                - ssm:GetParameter
+                - ssm:GetParameters
+                - ssm:AddTagsToResource
+              Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*.com./${lifecycle}/*
 
 Outputs:
   DomainCheckFunction:
