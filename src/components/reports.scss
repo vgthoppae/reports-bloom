@@ -1,0 +1,40 @@
+.replinkdiv {
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: blue;
+}
+
+.replinkdivActive {
+  @extend .replinkdiv;
+  background-color: blanchedalmond;
+}
+
+.repcontentdiv {
+  background-color: #f6f6f6;
+  border-radius: 25px;
+  width: 100%;
+  height: 100%
+}
+
+.repContentItemTitle {
+  padding-bottom: 10px;
+  border-bottom: 1px solid pink;
+  line-height: 48px;
+}
+
+.repTemplatediv {
+  background-color: #f6f6f6;
+  border-radius: 25px;
+  width: 100%;
+  height: 100%
+}
+
+.overflow-auto {
+  flex: 1;
+  overflow-y: scroll;
+}
