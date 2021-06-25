@@ -7,6 +7,7 @@ import { Container } from 'react-bootstrap';
 // import { Auth } from 'aws-amplify';
 import { useReportEntry } from './reportEntry-hook';
 import Auth from '../service/congnitoAuth'
+import { signUp } from '../service/cognitoIdp'
 
 const Login = (props) => {
   const [validated, setValidated] = useState(false);
@@ -27,7 +28,8 @@ const Login = (props) => {
     event.preventDefault();
 
     try {
-      const user = await Auth.signIn(form.userId.value, form.password.value);
+      // const user = await Auth.signIn(form.userId.value, form.password.value);
+      await signUp({});
 
       // const user1= await Auth.currentAuthenticatedUser();
 
@@ -40,11 +42,11 @@ const Login = (props) => {
       //   .then(data => console.log(data))
       //   .catch(err => console.log(err));
 
-      setUser(user);
-      console.log(user);
-      setValidated(true);
-      // props.setAlerts(undefined);
-      props.history.push('/home');
+      // setUser(user);
+      // console.log(user);
+      // setValidated(true);
+      // // props.setAlerts(undefined);
+      // props.history.push('/home');
     } catch (err) {
       setUser(undefined);
       console.log('login failed', err);
