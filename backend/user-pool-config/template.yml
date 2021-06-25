@@ -16,16 +16,17 @@ Resources:
         CloudTrailCognitoCreateUserPoolEvent:
           Properties:
             Pattern:
+              source:
+                - aws.cognito-idp            
+              detail-type:
+                - AWS API Call via CloudTrail
               detail:
+                eventSource:
+                - cognito-idp.amazonaws.com              
                 eventName:
                 - CreateUserPool
-                eventSource:
-                - cognito-identity.amazonaws.com
-              detail-type:
-              - AWS API Call via CloudTrail
-              source:
-              - aws.cognito-identity
           Type: CloudWatchEvent
+      FunctionName: cognito-idp-admin-user-config
       MemorySize: 128
       Tags:
         Key: Project
