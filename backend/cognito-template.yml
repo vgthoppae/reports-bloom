@@ -1,0 +1,33 @@
+Parameters:
+  OrgId:
+    Description: Org Id
+    Type: String
+    Default: agilevision
+
+Resources:
+  OrgReportsBloomUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Join
+        - '-'
+        - - !Ref OrgId
+          - 'reportsbloom-userpool'
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+      UsernameAttributes:
+        - email
+      Schema:
+        - AttributeDataType: String
+          Name: email
+          Required: false
+
+  OrgReportsBloomUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref OrgReportsBloomUserPool
+      ClientName: !Join
+        - '-'
+        - - !Ref OrgId
+          - 'reportsbloom-webapp'
+      GenerateSecret: false
