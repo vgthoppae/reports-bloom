@@ -1,5 +1,6 @@
 require("babel-core/register");
 require("babel-polyfill");
+const sampleEvent = require('../../../events/event-cloudwatch-event.json');
 
 // Import all functions from scheduled-event-logger.js
 const handler = require('../../../src/handlers/handler.js');
@@ -11,23 +12,9 @@ describe('Test for sqs-payload-logger', function () {
     // https://jestjs.io/docs/en/mock-functions.html
     console.info = jest.fn()
 
-    // Create a sample payload with CloudWatch scheduled event message format
-    var payload = {
-      "id": "cdc73f9d-aea9-11e3-9d5a-835b769c0d9c",
-      "detail-type": "Scheduled Event",
-      "source": "aws.events",
-      "account": "",
-      "time": "1970-01-01T00:00:00Z",
-      "region": "us-west-2",
-      "resources": [
-        "arn:aws:events:us-west-2:123456789012:rule/ExampleRule"
-      ],
-      "detail": {}
-    }
-
-    await handler.main(payload, null)
+    await handler.main(sampleEvent, null)
 
     // Verify that console.info has been called with the expected payload
-    expect(console.info).toHaveBeenCalledWith(JSON.stringify(payload))
+    expect(console.info).toHaveBeenCalledWith(JSON.stringify(sampleEvent))
   });
 });

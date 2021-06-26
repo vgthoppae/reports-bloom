@@ -1,26 +1,28 @@
-import { CognitoIdentityProviderClient, AdminCreateUserCommand } from "@aws-sdk/client-cognito-identity-provider";
+const {
+    CognitoIdentityProviderClient,
+    AdminCreateUserCommand,
+  } = require("@aws-sdk/client-cognito-identity-provider");
 
-const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
-
+ const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
 
 exports.main = async (event, context) => {
     console.info(JSON.stringify(event));
+    const userPoolId = event["responseElements"]["userPool"]["id"]
     const input = {
         DesiredDeliveryMediums: ['EMAIL'],
+        ForceAliasCreation: false,
         MessageActionType: 'RESEND',
         TemporaryPassword: 'TempPassword1',
         UserAttributes: [
             {
                 Name: 'email', /* required */
-                Value: 'avadmin@agilevision.com'
+                Value: 'venkat.thoppae@gmail.com'
             },
         ],
-        UserPoolId: 'us-east-1_sz3Ir0M3p',
-        Username: 'avadmin@agilevision.com'
+        UserPoolId: userPoolId,
+        Username: 'venkat.thoppae@gmail.com'
     }
     const command = new AdminCreateUserCommand(input);
-
-
     try {
         const data = await client.send(command);
         console.log(data);
