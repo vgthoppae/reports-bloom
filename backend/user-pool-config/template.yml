@@ -3,31 +3,37 @@ Description: >-
   user-pool-config
 
 Transform:
-- AWS::Serverless-2016-10-31
+  - AWS::Serverless-2016-10-31
 
-Resources:  
+Resources:
   AdminUserConfig:
     Type: AWS::Serverless::Function
     Properties:
       Description: A Lambda function that creates an admin user upon creation of user pool
-      Runtime: nodejs14.x
+      Runtime: nodejs12.x
       Handler: src/handlers/handler.main
       Events:
         CloudTrailCognitoCreateUserPoolEvent:
           Properties:
             Pattern:
               source:
-                - aws.cognito-idp            
+                - aws.cognito-idp
               detail-type:
                 - AWS API Call via CloudTrail
               detail:
                 eventSource:
-                - cognito-idp.amazonaws.com              
+                  - cognito-idp.amazonaws.com
                 eventName:
-                - CreateUserPool
+                  - CreateUserPool
           Type: CloudWatchEvent
       FunctionName: cognito-idp-admin-user-config
       MemorySize: 128
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: 'cognito-idp:AdminCreateUser'
+              Resource: '*'
       Tags:
         Key: Project
         Value: teamreports
