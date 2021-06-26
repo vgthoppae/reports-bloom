@@ -7,7 +7,7 @@ const {
 
 exports.main = async (event, context) => {
     console.info(JSON.stringify(event));
-    const userPoolId = event["responseElements"]["userPool"]["id"]
+    const userPoolId = event["detail"]["responseElements"]["userPool"]["id"]
     const input = {
         DesiredDeliveryMediums: ['EMAIL'],
         ForceAliasCreation: false,
