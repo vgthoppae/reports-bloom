@@ -21,6 +21,10 @@ Resources:
         - AttributeDataType: String
           Name: email
           Required: false
+      UserPoolTags:
+        {
+          "Project": "TeamReports"
+        }
 
   TeamReportsUserPoolClient:
     Type: AWS::Cognito::UserPoolClient

@@ -12,7 +12,6 @@ exports.main = async (event, context) => {
         DesiredDeliveryMediums: ['EMAIL'],
         ForceAliasCreation: false,
         MessageActionType: 'RESEND',
-        TemporaryPassword: 'TempPassword1',
         UserAttributes: [
             {
                 Name: 'email', /* required */
