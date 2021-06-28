@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  TeamReports Onboarding Stack
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  StageName:
+    Type: String
+    Default: dev  
+
+Resources:
+  TeamReportsTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "pk"
+          AttributeType: "S"
+        - 
+          AttributeName: "sk"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "pk"
+          KeyType: "HASH"
+        - 
+          AttributeName: "sk"
+          KeyType: "RANGE"  
+      BillingMode: PAY_PER_REQUEST
+      TableName: TeamReportsTable  
+
+  TeamReportsOnboardApiCloudWatchLogGroup:
+    Type: AWS::Logs::LogGroup
+
+  TeamReportsOnboardApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      AccessLogSettings:
+        DestinationArn: !GetAtt TeamReportsOnboardApiCloudWatchLogGroup.Arn
+        Format: $context.requestId
+      StageName: !Ref StageName
+      Tags: 
+        Project: TeamReports
+      DefinitionBody:
+        'Fn::Transform':
+          Name: 'AWS::Include'
+          Parameters:
+            Location: onboard-oas.yml
+
+  TeamReportsOnboardFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: A Lambda function handling onboarding
+      Runtime: nodejs14.x
+      Handler: src/handlers/onboard-handler.main
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /onboard
+            Method: post
+            RestApiId: !Ref TeamReportsOnboardApi
+
+      FunctionName: trep-onboard-function
+      MemorySize: 128
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: 
+                - cognito-idp:AdminCreateUser
+                - cognito-idp:CreateUserPool
+                - cognito-idp:CreateUserPoolClient
+                - cognito-idp:TagResource
+              Resource: '*'
+            - Effect: Allow
+              Action: 
+                - dynamodb:PutItem
+              Resource: !GetAtt TeamReportsTable.Arn     
+      Tags:
+        Key: Project
+        Value: TeamReports
+      Timeout: 100
+
+Outputs:
+  OnboardApiCloudWatchLogGroup:
+    Description: Information about the value
+    Value: !GetAtt TeamReportsOnboardApiCloudWatchLogGroup.Arn    
+    
+  OnboardApiUrl:
+    Description: API Endpoint
+    Value:
+      Fn::Sub: 'https://${TeamReportsOnboardApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${StageName}/'

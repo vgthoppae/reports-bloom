@@ -1,3 +1,17 @@
 aws cloudformation create-stack --stack-name repbloom-cognito --template-body file://cognito-template.yml
 
 aws cloudformation delete-stack --stack-name repbloom-cognito
+
+              # CloudTrailCognitoCreateUserPoolEvent:
+              #   Properties:
+              #     Pattern:
+              #       source:
+              #         - aws.cognito-idp
+              #       detail-type:
+              #         - AWS API Call via CloudTrail
+              #       detail:
+              #         eventSource:
+              #           - cognito-idp.amazonaws.com
+              #         eventName:
+              #           - CreateUserPool
+              #   Type: CloudWatchEvent
