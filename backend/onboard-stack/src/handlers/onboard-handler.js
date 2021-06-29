@@ -1,4 +1,4 @@
-const { createUserPool, createUserPoolClient } = require('../mods/cognito-user-pool')
+const { createUserPool, createUserPoolClient, createAdminUser } = require('../mods/cognito-user-pool')
 const { putConfigItem } = require('../mods/dynamo-dao')
 
 const headers = {
@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
     payload = JSON.parse(rawPayload)
   }
   const orgCode = payload["orgCode"]
-  
+  const adminEmail = payload["adminEmail"]
   
   try {
     //create user pool
@@ -27,6 +27,8 @@ exports.main = async (event, context) => {
     const dbRet = await putConfigItem(orgCode, userPoolId);
 
     await createUserPoolClient(orgCode, userPoolId);
+
+    await createAdminUser(adminEmail, userPoolId);
   } catch(error) {
     console.log(error)
     statusCode = 500

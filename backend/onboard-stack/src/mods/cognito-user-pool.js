@@ -1,7 +1,8 @@
 const {
   CognitoIdentityProviderClient,
   CreateUserPoolCommand,
-  CreateUserPoolClientCommand
+  CreateUserPoolClientCommand,
+  AdminCreateUserCommand
 } = require("@aws-sdk/client-cognito-identity-provider");
 
 const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
@@ -64,5 +65,23 @@ exports.createUserPoolClient = async (orgCode, userPooId) => {
   }
 
   const command = new CreateUserPoolClientCommand(input);
+  return await sendCommand(command);
+}
+
+exports.createAdminUser = async (adminEmail, userPoolId) => {
+  const input = {
+    DesiredDeliveryMediums: ['EMAIL'],
+    ForceAliasCreation: false,
+    MessageActionType: 'RESEND',
+    UserAttributes: [
+        {
+            Name: 'email', /* required */
+            Value: adminEmail
+        },
+    ],
+    UserPoolId: userPoolId,
+    Username: adminEmail
+  }
+  const command = new AdminCreateUserCommand(input);
   return await sendCommand(command);
 }

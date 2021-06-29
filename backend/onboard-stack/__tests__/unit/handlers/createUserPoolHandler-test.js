@@ -16,7 +16,7 @@ describe('Test for creating user pool', function () {
     //   }
     // }
     const event = {
-      body: '{\n    "orgCode": "pepsi"\n}'
+      body: '{\n    "orgCode": "pepsi", "adminEmail": "tkvganesh@gmail.com" \n}'
     }
 
     await handler.main(event, null)
