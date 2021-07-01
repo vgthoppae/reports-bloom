@@ -5,6 +5,7 @@ import ReportEntryDataProvider from './components/reportEntry-hook';
 import AlertsProvider from './components/alerts-hook';
 import Amplify from 'aws-amplify';
 import config from './aws-exports';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 Amplify.configure(config);
 

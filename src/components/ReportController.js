@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Login from './Login';
+import RegisterForm from './register-form';
 // import { Auth } from 'aws-amplify';
 import Dashboard from './Dashboard';
 import ReportStatus from './ReportStatus';
@@ -117,6 +118,12 @@ const ReportController = (props) => {
           <Switch>
             <Route
               exact
+              path={['/', '/home']}
+              render={(props) => <Dashboard {...props} />}
+            />
+
+            <Route
+              exact
               path={['/login']}
               render={(props) => (
                 <Login setTitle={(t) => setTitle(t)} {...props} />
@@ -125,8 +132,10 @@ const ReportController = (props) => {
 
             <Route
               exact
-              path={['/', '/home']}
-              render={(props) => <Dashboard {...props} />}
+              path={['/registerconfirm']}
+              render={(props) => (
+                <RegisterForm setTitle={(t) => setTitle(t)} {...props} />
+              )}
             />
 
             <Route
