@@ -8,7 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 // import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
 import Auth from '../service/congnitoAuth';
-import FittedImage from 'react-fitted-image';
+// import FittedImage from 'react-fitted-image';
 
 const ReportHeader = (props) => {
   const { user, setUser } = useReportEntry();
@@ -28,15 +28,15 @@ const ReportHeader = (props) => {
 
   return (
     <Navbar bg="dark" expand="lg">
-      {/* <Navbar.Brand
+      <Navbar.Brand
         href="#home"
         style={{ fontFamily: 'Biotif,sans-serif', fontWeight: 500 }}
       >
-        <span style={{ color: '#5F9EA0' }}>reports</span>
-        <span style={{ color: '#6B8E23' }}>bloom</span>
-      </Navbar.Brand> */}
+        <span style={{ color: '#5F9EA0' }}>team</span>
+        <span style={{ color: '#6B8E23' }}>reports</span>
+      </Navbar.Brand>
 
-      <div>
+      {/* <div>
         <img
           src="logo-greenletters.png"
           width="125"
@@ -45,7 +45,7 @@ const ReportHeader = (props) => {
             objectFit: 'contain',
           }}
         />
-      </div>
+      </div> */}
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
