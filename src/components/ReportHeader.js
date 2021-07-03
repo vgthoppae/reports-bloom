@@ -27,13 +27,14 @@ const ReportHeader = (props) => {
 
   return (
     <Navbar bg="dark" expand="lg">
-      <Navbar.Brand
+      {/* <Navbar.Brand
         href="#home"
         style={{ fontFamily: 'Biotif,sans-serif', fontWeight: 500 }}
       >
         <span style={{ color: '#5F9EA0' }}>reports</span>
         <span style={{ color: '#6B8E23' }}>bloom</span>
-      </Navbar.Brand>
+      </Navbar.Brand> */}
+      <img src= "logo.jpg" width="200px" height="100px" />
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
