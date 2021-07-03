@@ -10,11 +10,10 @@ import { MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons';
 import { addReportEntry, getReportEntry } from '../service/StatusEntryService';
 import protectedRoute from './protectedRoute';
 import ReportHeader from './ReportHeader';
-// import { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import ReportToast from './ReportToast';
 import { getCurrentOrg } from '../service/CommonUtils';
 import TinyEditor from './tinyeditor';
-import Auth from '../service/congnitoAuth'
 
 const ReportStatus = (props) => {
   const [rteContents, setRteContents] = React.useState([]);

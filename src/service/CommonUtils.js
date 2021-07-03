@@ -1,5 +1,5 @@
-// import { Auth } from 'aws-amplify';
-import Auth from '../service/congnitoAuth'
+import { Auth } from 'aws-amplify';
+// import Auth from '../service/congnitoAuth'
 
 export function getCurrentOrg() {
   return "loc";

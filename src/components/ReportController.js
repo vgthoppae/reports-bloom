@@ -13,7 +13,8 @@ import StandardWorkflow from './StandardWorkflow';
 import CustomWorkflow from './CustomWorkflow';
 import ReportWorkflow from './ReportWorkflow';
 import AccessManagement from './security/AccessManagement';
-import Auth from '../service/congnitoAuth'
+// import Auth from '../service/congnitoAuth'
+import {Auth, Hub} from 'aws-amplify';
 
 const ReportController = (props) => {
   // const [user, setUser] = useState(undefined); //authenticated CognitoUser

@@ -13,6 +13,7 @@ const Login = (props) => {
 
   useEffect(() => {
     Hub.listen("auth_channel", (data) => {
+      console.log(data.payload.user)
       console.log("Hub received messages at Login form")
     });
 
@@ -25,7 +26,7 @@ const Login = (props) => {
     // }).catch(err => console.log(err));
 
     return function cleanup() {
-        logger.info("Removing HUB subscription to " + "auth_channel");
+        logger.info("Removing HUB subscription to " + "auth");
         Hub.remove("auth_channel", (data)=> {
           console.log("Hub removing channel subscription at Login form")
         });
@@ -38,15 +39,20 @@ const Login = (props) => {
     const form = event.target
     const user = await Auth.signIn(form.email.value, form.password.value);
 
+    if (user.challengeName)
+      history.push(authChallengePathMap[user.challengeName]);
+    else
+      history.push('/home')
+    
+
     Hub.dispatch("auth_channel", {
-      event: "tbd",
+      event: "sign_in",
       success: true,
-      message: "",
+      message: "Sign in completed",
       username: form.email.value,
       user: user,
     });
 
-    history.push(authChallengePathMap[user.challengeName]);
 
     // if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
 
