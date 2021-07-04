@@ -1,0 +1,5 @@
+{
+  "pk": {"S": "user1"},
+  "sk": {"S": "1"},
+  "details": {"S": "test data"}
+}

@@ -8,6 +8,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
 import { MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons';
 import { addReportEntry, getReportEntry } from '../service/StatusEntryService';
+import { putReportEntry } from '../service/daoService';
 import protectedRoute from './protectedRoute';
 import ReportHeader from './ReportHeader';
 import { Auth } from 'aws-amplify';
@@ -64,10 +65,10 @@ const ReportStatus = (props) => {
       const entry = {
         pk: `org=${org}#user=${user.username}`,
         sk: period,
-        description: JSON.stringify(description),
+        details: JSON.stringify(description),
       };
       console.log(period);
-      await addReportEntry(entry);
+      await putReportEntry(entry);
       console.log('status updated');
       setAlert('Status updated!!');
     } catch (err) {
