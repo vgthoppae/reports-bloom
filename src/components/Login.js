@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import {Link, useHistory} from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import {Auth, Hub, Logger} from 'aws-amplify';
+import { LeftOutlined } from "@ant-design/icons";
 
 const authChallengePathMap = {
   "NEW_PASSWORD_REQUIRED": "/registerconfirm"
@@ -37,7 +38,13 @@ const Login = (props) => {
     event.preventDefault();
 
     const form = event.target
-    const user = await Auth.signIn(form.email.value, form.password.value);
+    let user = undefined
+    try {
+      user = await Auth.signIn(form.email.value, form.password.value);
+    } catch(error) {
+      console.log(error)
+      return
+    }
 
     if (user.challengeName)
       history.push(authChallengePathMap[user.challengeName]);

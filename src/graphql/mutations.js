@@ -1,4 +1,4 @@
-export const putReport = /* GraphQL */ `
+export const putReport = `
   mutation putReport($id: ID!, $details: String) {
     putReport(id: $id, details: $details) {
       id,
@@ -7,10 +7,16 @@ export const putReport = /* GraphQL */ `
   }
 `;
 
-// export const putReport = /* GraphQL */ `
-//   mutation putReport {
-//     putReport(id: "sam", details: "foo") {
-//       id
-//     }
-//   }
-// `;
+export const putReportItem = `
+  mutation putReportItem($pk: ID!, $sk: String!, $entry:[ReportDetailInput]!) {
+    putReportItem(pk: $pk, sk: $sk, entry: $entry) {
+      pk,
+      sk,
+      details {
+        key
+        desc
+      }
+    }
+  }
+`;
+

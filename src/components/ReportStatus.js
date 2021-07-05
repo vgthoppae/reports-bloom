@@ -7,8 +7,8 @@ import { useReportEntry } from './reportEntry-hook';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
 import { MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons';
-import { addReportEntry, getReportEntry } from '../service/StatusEntryService';
-import { putReportEntry } from '../service/daoService';
+// import { addReportEntry, getReportEntry } from '../service/StatusEntryService';
+import { putReportItemEntry, getReportItemEntry } from '../service/daoService';
 import protectedRoute from './protectedRoute';
 import ReportHeader from './ReportHeader';
 import { Auth } from 'aws-amplify';
@@ -62,13 +62,13 @@ const ReportStatus = (props) => {
 
     if (user === undefined) user = await Auth.currentAuthenticatedUser();
     try {
-      const entry = {
+      const arg = {
         pk: `org=${org}#user=${user.username}`,
         sk: period,
-        details: JSON.stringify(description),
+        entry: [{key: 'task completed', desc: 'Worked on AppSync'}],
       };
       console.log(period);
-      await putReportEntry(entry);
+      await putReportItemEntry(arg);
       console.log('status updated');
       setAlert('Status updated!!');
     } catch (err) {
@@ -99,8 +99,13 @@ const ReportStatus = (props) => {
   const getReportEntriesForPeriod = async (period) => {
     if (user === undefined) user = await Auth.currentAuthenticatedUser();
 
-    const pk = `org=${org}#user=${user.username}`;
-    const desc = await getReportEntry(pk, period);
+    // const pk = `org=${org}#user=${user.username}`;
+    // const pk = `org=loc#reports=stdstatus#userid=org=loc#user=${user.username}`
+    const input = {
+      pk: `org=loc#user=${user.username}`,
+      sk: period
+    }
+    const desc = await getReportItemEntry(input);
     const statusFields = [];
     let newRteContents = [];
 
