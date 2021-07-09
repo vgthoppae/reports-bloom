@@ -1,0 +1,92 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  CertArn:
+    Description: SSL Certificate ARN
+    Type: String
+    Default: 
+
+  BucketDomain:
+    Type: String
+    Default: 
+    
+Resources:
+  TeamreportsCDN:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - www.teamreports.io
+          - teamreports.io
+          - agilevision.teamreports.io
+          - loc.teamreports.io
+        # CacheBehaviors:
+          # - AllowedMethods: [GET, HEAD, OPTIONS]
+          #   CachePolicyId: !GetAtt CachePolicy.Id
+          #   Compress: true
+          #   PathPattern: "*"
+          #   TargetOriginId: teamreportsio-origin-id
+          #   ViewerProtocolPolicy: redirect-to-https
+        DefaultCacheBehavior:
+          AllowedMethods: [GET, HEAD, OPTIONS]
+          Compress: true
+          CachePolicyId: !Ref DefaultCachePolicy
+          OriginRequestPolicyId: !Ref DefaultOriginRequestPolicy
+          TargetOriginId: teamreportsio-origin-id
+          ViewerProtocolPolicy: redirect-to-https          
+        Enabled: true
+        HttpVersion: http2
+        IPV6Enabled: true
+        Logging:
+          Bucket: aws-logs-770382975654-us-east-1.s3.amazonaws.com
+          IncludeCookies: false
+          Prefix: teamreports-cloudfront
+        Origins:
+          - DomainName: !Ref BucketDomain
+            Id: teamreportsio-origin-id
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertArn
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
+      Tags:
+        - Key: Project
+          Value: teamreports
+
+  DefaultOriginRequestPolicy:
+    Type: AWS::CloudFront::OriginRequestPolicy
+    Properties:
+      OriginRequestPolicyConfig:
+        Name: DefaultOriginRequestPolicy
+        CookiesConfig:
+          CookieBehavior: all
+        HeadersConfig:
+          HeaderBehavior: allViewer
+        QueryStringsConfig:
+          QueryStringBehavior: all         
+
+
+  DefaultCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        DefaultTTL: 86400
+        MaxTTL: 31536000
+        MinTTL: 86400 
+        Name: DefaultCachePolicy
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: none
+          EnableAcceptEncodingGzip: true
+          HeadersConfig:
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: none   
+
+  # TeamReportsOAI:
+  #   Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+  #   Properties:
+  #     CloudFrontOriginAccessIdentityConfig:
+  #       Comment: Team Reports CDN - S3 OAI

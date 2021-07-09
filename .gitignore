@@ -25,3 +25,5 @@ package-lock.json
 .aws-sam
 backend/user-pool-config/events/event-cloudwatch-event.json
 package-lock.json
+backend/cfn-params.json
+src/aws-exports.js
