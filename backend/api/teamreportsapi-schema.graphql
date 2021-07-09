@@ -1,0 +1,18 @@
+schema {
+	query: Query
+}
+
+type ConfigItem {
+  pk: ID!,
+  sk: String!,
+  details: [ConfigDetail!]
+}
+
+type ConfigDetail {
+  key: String,
+  value: String
+}
+
+type Query {
+  getConfig(pk: ID!, sk: String!): ConfigItem!
+}
