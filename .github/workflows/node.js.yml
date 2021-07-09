@@ -13,20 +13,28 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-#     strategy:
-#       matrix:
-#         node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: '14.x'
         cache: 'npm'
+
     - run: npm ci
+    
     - run: npm run build --if-present
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+    - name: Upload files to S3 with AWS CLI
+      run: |
+        aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} --delete           

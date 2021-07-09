@@ -1,0 +1,7 @@
+aws iam create-policy --policy-name s3-sync-policy --policy-document file://s3-sync-policy.json
+
+aws iam create-user --user-name s3-sync-user --tags Key=Project,Value=teamreports
+
+aws iam attach-user-policy --user-name s3-sync-user --policy-arn arn:aws:iam::xxx:policy/s3-sync-policy
+
+aws iam create-access-key --user-name s3-sync-user
