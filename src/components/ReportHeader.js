@@ -7,7 +7,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 // import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
-import Auth from '../service/congnitoAuth'
+import Auth from '../service/congnitoAuth';
+// import FittedImage from 'react-fitted-image';
 
 const ReportHeader = (props) => {
   const { user, setUser } = useReportEntry();
@@ -31,9 +32,21 @@ const ReportHeader = (props) => {
         href="#home"
         style={{ fontFamily: 'Biotif,sans-serif', fontWeight: 500 }}
       >
-        <span style={{ color: '#5F9EA0' }}>reports</span>
-        <span style={{ color: '#6B8E23' }}>bloom</span>
+        <span style={{ color: '#5F9EA0' }}>team</span>
+        <span style={{ color: '#6B8E23' }}>reports</span>
       </Navbar.Brand>
+
+      {/* <div>
+        <img
+          src="logo-greenletters.png"
+          width="125"
+          height="20"
+          style={{
+            objectFit: 'contain',
+          }}
+        />
+      </div> */}
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -54,7 +67,7 @@ const ReportHeader = (props) => {
           </Nav.Link>
           <Nav.Link href="#accessMgmt" style={{ color: '#5F9EA0' }}>
             Access Management
-          </Nav.Link>                 
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
       <Navbar.Brand href="#home" style={{ color: '#5F9EA0' }}>

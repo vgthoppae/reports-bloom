@@ -1,0 +1,317 @@
+{
+    "version": "0",
+    "id": "8acab5e2-6e8f-8f5b-a23f-bdc9fcaf4f1c",
+    "detail-type": "AWS API Call via CloudTrail",
+    "source": "aws.cognito-idp",
+    "account": "770382975654",
+    "time": "2021-06-26T18:49:34Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+            "type": "IAMUser",
+            "principalId": "AIDA3GXTHKKTGLHAD2SUU",
+            "arn": "arn:aws:iam::770382975654:user/vthoppae",
+            "accountId": "770382975654",
+            "accessKeyId": "ASIAIGXAUIZUKRK4C5SQ",
+            "userName": "vthoppae",
+            "sessionContext": {
+                "sessionIssuer": {},
+                "webIdFederationData": {},
+                "attributes": {
+                    "creationDate": "2021-06-26T18:49:28Z",
+                    "mfaAuthenticated": "false"
+                }
+            },
+            "invokedBy": "cloudformation.amazonaws.com"
+        },
+        "eventTime": "2021-06-26T18:49:34Z",
+        "eventSource": "cognito-idp.amazonaws.com",
+        "eventName": "CreateUserPool",
+        "awsRegion": "us-east-1",
+        "sourceIPAddress": "cloudformation.amazonaws.com",
+        "userAgent": "cloudformation.amazonaws.com",
+        "requestParameters": {
+            "poolName": "agilevision-teamreports-userpool",
+            "policies": {
+                "passwordPolicy": {
+                    "minimumLength": 8,
+                    "requireUppercase": false,
+                    "requireLowercase": false,
+                    "requireNumbers": false,
+                    "requireSymbols": false,
+                    "temporaryPasswordValidityDays": 0
+                }
+            },
+            "usernameAttributes": [
+                "email"
+            ],
+            "schema": [
+                {
+                    "name": "email",
+                    "attributeDataType": "String",
+                    "developerOnlyAttribute": false,
+                    "mutable": false,
+                    "required": false
+                }
+            ]
+        },
+        "responseElements": {
+            "userPool": {
+                "id": "us-east-1_lE5r9cbGi",
+                "name": "agilevision-teamreports-userpool",
+                "policies": {
+                    "passwordPolicy": {
+                        "minimumLength": 8,
+                        "requireUppercase": false,
+                        "requireLowercase": false,
+                        "requireNumbers": false,
+                        "requireSymbols": false,
+                        "temporaryPasswordValidityDays": 7
+                    }
+                },
+                "lambdaConfig": {},
+                "lastModifiedDate": "Jun 26, 2021, 6:49:34 PM",
+                "creationDate": "Jun 26, 2021, 6:49:34 PM",
+                "schemaAttributes": [
+                    {
+                        "name": "sub",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": false,
+                        "required": true,
+                        "stringAttributeConstraints": {
+                            "minLength": "1",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "given_name",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "family_name",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "middle_name",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "nickname",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "preferred_username",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "profile",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "picture",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "website",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": false,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "email_verified",
+                        "attributeDataType": "Boolean",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false
+                    },
+                    {
+                        "name": "gender",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "birthdate",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "10",
+                            "maxLength": "10"
+                        }
+                    },
+                    {
+                        "name": "zoneinfo",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "locale",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "phone_number",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "phone_number_verified",
+                        "attributeDataType": "Boolean",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false
+                    },
+                    {
+                        "name": "address",
+                        "attributeDataType": "String",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "stringAttributeConstraints": {
+                            "minLength": "0",
+                            "maxLength": "2048"
+                        }
+                    },
+                    {
+                        "name": "updated_at",
+                        "attributeDataType": "Number",
+                        "developerOnlyAttribute": false,
+                        "mutable": true,
+                        "required": false,
+                        "numberAttributeConstraints": {
+                            "minValue": "0"
+                        }
+                    }
+                ],
+                "usernameAttributes": [
+                    "email"
+                ],
+                "verificationMessageTemplate": {
+                    "defaultEmailOption": "CONFIRM_WITH_CODE"
+                },
+                "mfaConfiguration": "OFF",
+                "estimatedNumberOfUsers": 0,
+                "emailConfiguration": {
+                    "emailSendingAccount": "COGNITO_DEFAULT"
+                },
+                "adminCreateUserConfig": {
+                    "allowAdminCreateUserOnly": false,
+                    "unusedAccountValidityDays": 7
+                },
+                "arn": "arn:aws:cognito-idp:us-east-1:770382975654:userpool/us-east-1_lE5r9cbGi"
+            }
+        },
+        "requestID": "967992cc-6c1c-44b5-9dbb-6f49ba3b7202",
+        "eventID": "16c0730a-ebc2-40e2-b517-152082030733",
+        "readOnly": false,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "770382975654",
+        "eventCategory": "Management"
+    }
+}
+

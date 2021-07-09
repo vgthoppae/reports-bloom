@@ -3,12 +3,12 @@ import { Col, Container, Nav, Pagination, Row, Alert } from 'react-bootstrap';
 import { useReportEntry } from './reportEntry-hook';
 import ReportHeader from './ReportHeader';
 import { getReportEntry, getReportEntryPeriods } from '../service/StatusEntryService';
-// import { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import ReportContentItem from './ReportContentItem';
 import './reports.scss';
 import moment from 'moment';
 import {getCurrentOrg} from '../service/CommonUtils'
-import Auth from '../service/congnitoAuth'
+// import Auth from '../service/congnitoAuth'
 
 
 const ExistingReports = (props) => {
@@ -105,8 +105,8 @@ const ExistingReports = (props) => {
     const result = await getReportEntryPeriods(pk);
     setReportPeriods(result)
     setReportContent()
-    setShowNoReportsAlert(result.length == 0);
-    console.log(result)
+    setShowNoReportsAlert(result?.length == 0);
+    // console.log(result)
   }
 
   return (

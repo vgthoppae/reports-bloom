@@ -1,0 +1,9 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "trep-cognito-config"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1mryumpmihgif"
+s3_prefix = "trep-cognito-config"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"

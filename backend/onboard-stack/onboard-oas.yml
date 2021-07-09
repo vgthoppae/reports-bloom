@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: trep-onboard
+  description: TeamReports Onboarding API
+  contact:
+    email: onboard@teamreports.io
+  version: 1.0.0
+
+paths:
+  /onboard:
+    post:
+      summary: Onboard an org
+      operationId: onboardOrg
+      requestBody:
+        description: Information required onboarding an app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Org'
+        required: true
+      responses:
+        400:
+          description: Missing Information
+          content: {}
+        500:
+          description: Server side Exception
+          content: {}
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      x-amazon-apigateway-integration:
+        uri: 
+          Fn::Sub: 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TeamReportsOnboardFunction.Arn}/invocations'
+        httpMethod: POST
+        type: aws_proxy
+        connectionType: INTERNET
+        payloadFormatVersion: 2.0
+
+components:
+  schemas:
+    Org:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Organization
+        adminUserName:
+          type: string
+          description: Name of the Admin User
+        adminEmail:
+          type: string
+          description: Email of the Admin User
+        adminPhoneNumber:
+          type: string
+          format: Admin Cell Phone Number
+    ApiResponse:
+      type: object
+      properties:
+        message:
+          type: string

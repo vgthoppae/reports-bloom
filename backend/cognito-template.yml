@@ -5,13 +5,13 @@ Parameters:
     Default: agilevision
 
 Resources:
-  OrgReportsBloomUserPool:
+  TeamReportsUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
       UserPoolName: !Join
         - '-'
         - - !Ref OrgId
-          - 'reportsbloom-userpool'
+          - 'teamreports-userpool'
       Policies:
         PasswordPolicy:
           MinimumLength: 8
@@ -21,13 +21,18 @@ Resources:
         - AttributeDataType: String
           Name: email
           Required: false
+      UserPoolTags:
+        {
+          "Project": "TeamReports"
+        }
 
-  OrgReportsBloomUserPoolClient:
+  TeamReportsUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      UserPoolId: !Ref OrgReportsBloomUserPool
+      UserPoolId: !Ref TeamReportsUserPool
       ClientName: !Join
         - '-'
         - - !Ref OrgId
-          - 'reportsbloom-webapp'
+          - 'teamreports-webapp'
       GenerateSecret: false
+
