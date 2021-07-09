@@ -3,6 +3,8 @@
 
 name: Node.js CI
 
+env:
+  CI: false
 on:
   push:
     branches: [ master ]
