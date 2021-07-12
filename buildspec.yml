@@ -3,10 +3,10 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo No action on install step...
+      - echo No action on install phase...
   pre_build:
     commands:
-      - echo Upload API spec to S3 bucket...
+      - echo No action on pre_build phase...
   build:
     commands:
       - echo Build started on `date`
@@ -15,4 +15,4 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - backend/api/teamreportsapi-schema.graphql
+    - backend/api/**/*

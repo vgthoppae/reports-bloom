@@ -25,3 +25,8 @@ yarn-error.log*
 backend/user-pool-config/events/event-cloudwatch-event.json
 backend/cfn-params.json
 src/aws-exports.js
+backend/appsync-cfn-param.json
+backend/cdn-cfn-params.json
+backend/codebuild-project.json
+backend/api/appsync-cfn-params.json
+backend/cdn/cdn-cfn-params.json
