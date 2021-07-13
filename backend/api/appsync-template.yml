@@ -4,26 +4,15 @@ Parameters:
   ApiName:
     Description: Name of the API
     Type: String
-    # Default: gapi
 
   ApiSchema:
     Description: Name of the API Schema
     Type: String
-    # Default: gschema
 
-  buildBucketName:
-    Description: CodeBuild output bucket name - will be injected by CodePipeline Parameter overrides (to be configured)
+  SchemaLoc:
+    Description: S3 location of the Api Schema
     Type: String
-    # Default: anewbucket
 
-  buildObjectKey:
-    Description: S3 object key for the artifact generated in the CodeBuild output bucket - will be injected by CodePipeline Parameter overrides (to be configured)
-    Type: String 
-    # Default: anewkey
-
-  s3OutputUrl:
-    Type: String
-    # Default: anewoutput
 
 Resources:
   GraphQLApi:
@@ -35,32 +24,14 @@ Resources:
         - Key: Project
           Value: teamreports  
   
-  # GraphQLSchema:
-  #   Type: AWS::AppSync::GraphQLSchema
-  #   Properties:
-  #     ApiId: !GetAtt GraphQLApi.ApiId
-  #     DefinitionS3Location: !Sub 
-  #       - s3://${abuildBucketName}/firstpipeline/BuildArtif/${abuildObjectKey}/backend/api/${aApiSchema}
-  #       - { abuildBucketName: !Ref buildBucketName, abuildObjectKey: !Ref buildObjectKey, aApiSchema: !Ref ApiSchema}
+  GraphQLSchema:
+    Type: AWS::AppSync::GraphQLSchema
+    Properties:
+      ApiId: !GetAtt GraphQLApi.ApiId
+      DefinitionS3Location: !Ref SchemaLoc
 
 Outputs:
   GraphQLApiUrl:
     Description: GraphQL Api URL
     Value: !GetAtt GraphQLApi.GraphQLUrl
-  
-  BuiltOutputBucketName:
-    Description: buildBucketName
-    Value: !Ref buildBucketName
-
-  BuiltOutputObjectKey:
-    Description: buildObjectKey
-    Value: !Ref buildObjectKey
-
-  s3OutputUrl:
-    Value: !Ref s3OutputUrl    
-
-  builtValue:
-    Value: !Sub
-        - s3://${abuildBucketName}/firstpipeline/BuildArtif/${abuildObjectKey}/backend/api/${aApiSchema}
-        - { abuildBucketName: !Ref buildBucketName, abuildObjectKey: !Ref buildObjectKey, aApiSchema: !Ref ApiSchema}
 

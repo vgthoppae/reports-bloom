@@ -1,7 +1,8 @@
 {
   "Parameters" : {
     "ApiName" : "TREPConfigApi",
-    "ApiSchema" : "teamreportsapi-schema.graphql"
+    "ApiSchema" : "teamreportsapi-schema.graphql", 
+    "SchemaLoc" : "s3://codepipeline-us-east-1-sbabs-user/teamreports/dev/teamreportsapi-schema.graphql"
   },
   "Tags" : {
     "Project" : "TeamReports"
