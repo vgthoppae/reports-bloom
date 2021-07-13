@@ -4,21 +4,26 @@ Parameters:
   ApiName:
     Description: Name of the API
     Type: String
+    # Default: gapi
 
   ApiSchema:
     Description: Name of the API Schema
-    Type: String   
+    Type: String
+    # Default: gschema
 
   buildBucketName:
     Description: CodeBuild output bucket name - will be injected by CodePipeline Parameter overrides (to be configured)
     Type: String
+    # Default: anewbucket
 
   buildObjectKey:
     Description: S3 object key for the artifact generated in the CodeBuild output bucket - will be injected by CodePipeline Parameter overrides (to be configured)
     Type: String 
+    # Default: anewkey
 
   s3OutputUrl:
     Type: String
+    # Default: anewoutput
 
 Resources:
   GraphQLApi:
@@ -54,8 +59,6 @@ Outputs:
 
   builtValue:
     Value: !Sub
-        - s3://${abuildBucketName}/firstpipeline/BuildArtif/${abuildObjectKey}/backend/api/${aApiSchema}
-        - {abuildBucketName: !Ref buildBucketName}
-        - {abuildObjectKey: !Ref buildObjectKey}
-        - {aApiSchema: !Ref ApiSchema}
+        - s3://${buildBucketName}/firstpipeline/BuildArtif/${buildObjectKey}/backend/api/${ApiSchema}
+        - { abuildBucketName: !Ref buildBucketName, abuildObjectKey: !Ref buildObjectKey, aApiSchema: !Ref ApiSchema }
 
