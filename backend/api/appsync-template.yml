@@ -17,6 +17,9 @@ Parameters:
     Description: S3 object key for the artifact generated in the CodeBuild output bucket - will be injected by CodePipeline Parameter overrides (to be configured)
     Type: String 
 
+  s3OutputUrl:
+    Type: String
+
 Resources:
   GraphQLApi:
     Type: AWS::AppSync::GraphQLApi
@@ -27,11 +30,11 @@ Resources:
         - Key: Project
           Value: teamreports  
   
-  GraphQLSchema:
-    Type: AWS::AppSync::GraphQLSchema
-    Properties:
-      ApiId: !GetAtt GraphQLApi.ApiId
-      DefinitionS3Location: !Sub "s3://${buildBucketName}/firstpipeline/BuildArtif/${buildObjectKey}/backend/api/${ApiSchema}"
+  # GraphQLSchema:
+  #   Type: AWS::AppSync::GraphQLSchema
+  #   Properties:
+  #     ApiId: !GetAtt GraphQLApi.ApiId
+  #     DefinitionS3Location: !Sub "s3://${buildBucketName}/firstpipeline/BuildArtif/${buildObjectKey}/backend/api/${ApiSchema}"
 
 Outputs:
   GraphQLApiUrl:
@@ -45,4 +48,15 @@ Outputs:
   BuiltOutputObjectKey:
     Description: buildObjectKey
     Value: !Ref buildObjectKey
+
+  s3OutputUrl:
+    Value: !Ref s3OutputUrl    
+
+  builtValue:
+    Value: 
+      !Sub:
+        - s3://${buildBucketName}/firstpipeline/BuildArtif/${buildObjectKey}/backend/api/${ApiSchema}
+        - {buildBucketName: !Ref buildBucketName}
+        - {buildObjectKey: !Ref buildObjectKey}
+        - {ApiSchema: !Ref ApiSchema}
 
