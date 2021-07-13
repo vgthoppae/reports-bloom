@@ -54,8 +54,8 @@ Outputs:
 
   builtValue:
     Value: !Sub
-        - s3://${buildBucketName}/firstpipeline/BuildArtif/${buildObjectKey}/backend/api/${ApiSchema}
-        - {buildBucketName: !Ref buildBucketName}
-        - {buildObjectKey: !Ref buildObjectKey}
-        - {ApiSchema: !Ref ApiSchema}
+        - s3://${abuildBucketName}/firstpipeline/BuildArtif/${abuildObjectKey}/backend/api/${aApiSchema}
+        - {abuildBucketName: !Ref buildBucketName}
+        - {abuildObjectKey: !Ref buildObjectKey}
+        - {aApiSchema: !Ref ApiSchema}
 
