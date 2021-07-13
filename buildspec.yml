@@ -13,6 +13,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - aws s3 cp backend/api/schemas/teamreportsapi-schema.graphql s3://teamreports-us-east-1-artifacts-bucket/dev/ 
 artifacts:
   files:
     - backend/api/**/*
