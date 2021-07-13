@@ -35,11 +35,13 @@ Resources:
         - Key: Project
           Value: teamreports  
   
-  # GraphQLSchema:
-  #   Type: AWS::AppSync::GraphQLSchema
-  #   Properties:
-  #     ApiId: !GetAtt GraphQLApi.ApiId
-  #     DefinitionS3Location: !Sub "s3://${buildBucketName}/firstpipeline/BuildArtif/${buildObjectKey}/backend/api/${ApiSchema}"
+  GraphQLSchema:
+    Type: AWS::AppSync::GraphQLSchema
+    Properties:
+      ApiId: !GetAtt GraphQLApi.ApiId
+      DefinitionS3Location: !Sub 
+        - ${s3Url}/backend/api/${schema}
+        - { s3Url: !Ref s3OutputUrl, schema: !Ref ApiSchema}
 
 Outputs:
   GraphQLApiUrl:
