@@ -1,6 +1,6 @@
 {
   "Parameters" : {
-    "ApiName" : "TeamReportsConfigApi",
+    "ApiName" : "TREPConfigApi",
     "ApiSchema" : "teamreportsapi-schema.graphql"
   },
   "Tags" : {
