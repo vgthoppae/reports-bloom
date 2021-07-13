@@ -17,6 +17,7 @@ artifacts:
   files:
     - backend/api/**/*
   secondary-artifacts:
-    files:
-      - backend/api/schemas/teamreportsapi-schema.graphql
-    name: graphql-schemas
+    schemas:
+      files:
+        - backend/api/schemas/teamreportsapi-schema.graphql
+      name: graphql-schemas
