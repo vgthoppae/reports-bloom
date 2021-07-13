@@ -5,6 +5,18 @@ Parameters:
     Description: Name of the API
     Type: String
 
+  ApiSchema:
+    Description: Name of the API Schema
+    Type: String   
+
+  buildBucketName:
+    Description: CodeBuild output bucket name - will be injected by CodePipeline Parameter overrides (to be configured)
+    Type: String
+
+  buildObjectKey:
+    Description: S3 object key for the artifact generated in the CodeBuild output bucket - will be injected by CodePipeline Parameter overrides (to be configured)
+    Type: String 
+
 Resources:
   GraphQLApi:
     Type: AWS::AppSync::GraphQLApi
@@ -23,7 +35,7 @@ Resources:
         Transform:
           Name: AWS::Include
           Parameters:
-            Location: file://teamreportsapi-schema.graphql
+            Location: !Sub "${buildBucketName}/${buildObjectKey}/backend/api/${ApiSchema}"
 
 Outputs:
   GraphQLApiUrl:

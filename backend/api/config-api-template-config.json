@@ -1,0 +1,9 @@
+{
+  "Parameters" : {
+    "ApiName" : "TeamReportsConfigApi",
+    "ApiSchema" : "teamreportsapi-schema.graphql"
+  },
+  "Tags" : {
+    "Project" : "TeamReports"
+  }
+}
