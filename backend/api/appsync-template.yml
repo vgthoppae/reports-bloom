@@ -31,11 +31,7 @@ Resources:
     Type: AWS::AppSync::GraphQLSchema
     Properties:
       ApiId: !GetAtt GraphQLApi.ApiId
-      Definition: 
-        Transform:
-          Name: AWS::Include
-          Parameters:
-            Location: !Sub "${buildBucketName}/${buildObjectKey}/backend/api/${ApiSchema}"
+      DefinitionS3Location: !Sub "${buildBucketName}/${buildObjectKey}/backend/api/${ApiSchema}"
 
 Outputs:
   GraphQLApiUrl:
