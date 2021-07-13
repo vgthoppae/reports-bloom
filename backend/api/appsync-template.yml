@@ -40,9 +40,9 @@ Outputs:
   
   BuiltOutputBucketName:
     Description: buildBucketName
-    Value: ${buildBucketName}
+    Value: !Ref buildBucketName
 
   BuiltOutputObjectKey:
     Description: buildObjectKey
-    Value: ${buildObjectKey}    
+    Value: !Ref buildObjectKey
 
