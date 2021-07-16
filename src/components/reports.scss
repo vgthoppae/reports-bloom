@@ -38,3 +38,13 @@
   flex: 1;
   overflow-y: scroll;
 }
+
+.dark-button {
+  background-color: #343a40!important;
+  color: #fff !important;
+
+  &:hover {
+    color: #fff;
+  }
+}
+

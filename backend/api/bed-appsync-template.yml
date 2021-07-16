@@ -1,22 +1,31 @@
 AWSTemplateFormatVersion: 2010-09-09
 
+Description: >-
+  TeamReports API Stack
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
 Parameters:
   ApiName:
     Description: Name of the API
     Type: String
+    Default: stage-tr-api
 
   ApiSchema:
     Description: Name of the API Schema
     Type: String
+    Default: stage-tr-schema
 
   SchemaLoc:
     Description: S3 location of the Api Schema
     Type: String
+    Default: s3://codepipeline-us-east-1-sbabs-user/teamreports/dev/teamreportsapi-schema.graphql
 
   DynamoDBTableName:
     Description: Existing Dynamodb table Name
     Type: String
-
+    Default: SimpleSingleTable
 
 Resources:
   GraphQLApi:
@@ -34,19 +43,17 @@ Resources:
       ApiId: !GetAtt GraphQLApi.ApiId
       DefinitionS3Location: !Ref SchemaLoc
 
-  # GraphQLDataSource:
-  #   Type: AWS::AppSync::DataSource
-  #   Properties:
-  #     ApiId: !GetAtt GraphQLApi.ApiId
-  #     Description: Data source for the config parameters
-  #     DynamoDBConfig: 
-  #       Properties:
-  #           AwsRegion: ${AWS::Region}
-  #           TableName: !Ref DynamoDBTableName
-  #           UseCallerCredentials: true
-  #     Name: ConfigDataSource
-  #     ServiceRoleArn: 
-  #     Type: AMAZON_DYNAMODB
+  GraphQLDataSource:
+    Type: AWS::AppSync::DataSource
+    Properties:
+      ApiId: !GetAtt GraphQLApi.ApiId
+      Description: Data source for the config parameters
+      DynamoDBConfig: 
+        AwsRegion: !Ref AWS::Region
+        TableName: !Ref DynamoDBTableName
+      Name: ConfigDataSource
+      ServiceRoleArn: !GetAtt AppSyncDynamoDBServiceRole.Arn
+      Type: AMAZON_DYNAMODB
 
   AppSyncDynamoDBServiceRole:
     Type: AWS::IAM::Role
@@ -71,8 +78,7 @@ Resources:
       RoleName: AppSyncDynamoDBServiceRole
       Tags: 
         - Key: Project
-          Value: teamreports  
-
+          Value: teamreports
 
 Outputs:
   GraphQLApiUrl:
