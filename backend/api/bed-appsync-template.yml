@@ -3,9 +3,6 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   TeamReports API Stack
 
-Transform:
-  - AWS::Serverless-2016-10-31
-
 Parameters:
   ApiName:
     Description: Name of the API
@@ -16,6 +13,11 @@ Parameters:
     Description: Name of the API Schema
     Type: String
     Default: stage-tr-schema
+
+  DataSourceName:
+    Description: Name of the API DataSource
+    Type: String
+    Default: config-api-datasource
 
   SchemaLoc:
     Description: S3 location of the Api Schema
@@ -35,8 +37,8 @@ Resources:
       Name: !Ref ApiName
       Tags:
         - Key: Project
-          Value: teamreports  
-  
+          Value: teamreports
+
   GraphQLSchema:
     Type: AWS::AppSync::GraphQLSchema
     Properties:
@@ -48,42 +50,74 @@ Resources:
     Properties:
       ApiId: !GetAtt GraphQLApi.ApiId
       Description: Data source for the config parameters
-      DynamoDBConfig: 
+      DynamoDBConfig:
         AwsRegion: !Ref AWS::Region
         TableName: !Ref DynamoDBTableName
-      Name: ConfigDataSource
+      Name: !Ref DataSourceName
       ServiceRoleArn: !GetAtt AppSyncDynamoDBServiceRole.Arn
       Type: AMAZON_DYNAMODB
 
   AppSyncDynamoDBServiceRole:
     Type: AWS::IAM::Role
-    Properties: 
-      AssumeRolePolicyDocument: 
+    Properties:
+      AssumeRolePolicyDocument:
         {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "appsync.amazonaws.com"
+          'Version': '2012-10-17',
+          'Statement':
+            [
+              {
+                'Effect': 'Allow',
+                'Principal': { 'Service': 'appsync.amazonaws.com' },
+                'Action': 'sts:AssumeRole',
               },
-              "Action": "sts:AssumeRole"
-            }
-          ]
+            ],
         }
       Description: Allows Appsync to assume this role and perform CRUD operation on DynamoDB
-      Policies: 
-        - "Fn::Transform":
-            Name: AWS::Include
-            Parameters:
-              Location: !Sub "s3://sbabs-shared-internal/DynamoDBCrudPolicy.json"
-      RoleName: AppSyncDynamoDBServiceRole
-      Tags: 
+      Policies:
+        - PolicyName: DynamoDBCrudPolicy
+          PolicyDocument:
+            'Fn::Transform':
+              Name: AWS::Include
+              Parameters:
+                Location: !Sub 's3://sbabs-shared-internal/DynamoDBCrudPolicy.json'
+      RoleName: !Sub appsync-${ApiName}-DataSource-DynamoDBServiceRole
+      Tags:
         - Key: Project
           Value: teamreports
+
+  PutConfigItemResolver:
+    Type: AWS::AppSync::Resolver
+    Properties:
+      ApiId: !GetAtt GraphQLApi.ApiId
+      DataSourceName: !GetAtt GraphQLDataSource.Name
+      FieldName: 'putConfig(...): ConfigItem!'
+      Kind: UNIT
+      RequestMappingTemplate:
+        { 'version': '2017-02-28', 'operation': 'PutItem', 'key': {
+              ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+              'pk': $util.dynamodb.toDynamoDBJson($ctx.args.pk),
+              'sk': $util.dynamodb.toDynamoDBJson($ctx.args.sk),
+            }, 'attributeValues': { '$ctx.args.details.key': $util.dynamodb.toDynamoDBJson($ctx.args.details.desc) } }
+      # RequestMappingTemplateS3Location: String
+      ResponseMappingTemplate:
+        #set( $configItem = {} )
+        #set( $configItem.pk = $ctx.result.pk)
+        #set( $configItem.sk = $ctx.result.sk)
+
+        #set( $configItem.details = {} )
+
+        #foreach( $key in $ctx.result.keySet() )
+        #if ($key != 'pk' && $key != 'sk')
+        #set($configItem.details.key = $key)
+        #set($configItem.details.desc = $ctx.result[$key])
+        #end
+        #end
+
+        $util.toJson($configItem)
+      # ResponseMappingTemplateS3Location: String
+      TypeName: String
 
 Outputs:
   GraphQLApiUrl:
     Description: GraphQL Api URL
     Value: !GetAtt GraphQLApi.GraphQLUrl
-

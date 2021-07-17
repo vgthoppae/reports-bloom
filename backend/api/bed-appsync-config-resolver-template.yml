@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: >-
+  TeamReports Config Api Resolvers Stack
+
+Resources:
+  PutConfigItemResolver:
+    Type: AWS::AppSync::Resolver
+    Properties:
+      ApiId: !GetAtt GraphQLApi.ApiId
+      DataSourceName: !GetAtt GraphQLDataSource.Name
+      FieldName: 'putConfig(...): ConfigItem!'
+      Kind: UNIT
+      RequestMappingTemplate:
+        { 'version': '2017-02-28', 'operation': 'PutItem', 'key': {
+              ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+              'pk': $util.dynamodb.toDynamoDBJson($ctx.args.pk),
+              'sk': $util.dynamodb.toDynamoDBJson($ctx.args.sk),
+            }, 'attributeValues': { '$ctx.args.details.key': $util.dynamodb.toDynamoDBJson($ctx.args.details.desc) } }
+      # RequestMappingTemplateS3Location: String
+      ResponseMappingTemplate:
+        #set( $configItem = {} )
+        #set( $configItem.pk = $ctx.result.pk)
+        #set( $configItem.sk = $ctx.result.sk)
+
+        #set( $configItem.details = {} )
+
+        #foreach( $key in $ctx.result.keySet() )
+        #if ($key != 'pk' && $key != 'sk')
+        #set($configItem.details.key = $key)
+        #set($configItem.details.desc = $ctx.result[$key])
+        #end
+        #end
+
+        $util.toJson($configItem)
+      # ResponseMappingTemplateS3Location: String
+      TypeName: String
