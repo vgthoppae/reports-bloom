@@ -73,8 +73,10 @@ Resources:
         }
       Description: Allows Appsync to assume this role and perform CRUD operation on DynamoDB
       Policies: 
-        - DynamoDBCrudPolicy:
-            tableName: !Ref DynamoDBTableName
+        - "Fn::Transform":
+            Name: AWS::Include
+            Parameters:
+              Location: !Sub "s3://sbabs-shared-internal/DynamoDBCrudPolicy.json"
       RoleName: AppSyncDynamoDBServiceRole
       Tags: 
         - Key: Project
