@@ -1,0 +1,28 @@
+type ConfigDetail {
+	key: String
+	desc: String
+}
+
+input ConfigDetailInput {
+	key: String
+	desc: String
+}
+
+type ConfigItem {
+	pk: ID!
+	sk: String!
+	details: ConfigDetail
+}
+
+type Mutation {
+	putConfig(pk: ID!, sk: String!, details: ConfigDetailInput!): ConfigItem!
+}
+
+type Query {
+	getConfig(pk: ID!, sk: String!): ConfigItem!
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}

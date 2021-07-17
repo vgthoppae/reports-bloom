@@ -5,9 +5,9 @@ import { UserOutlined } from '@ant-design/icons';
 import { useReportEntry } from './reportEntry-hook';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-// import { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
-import Auth from '../service/congnitoAuth';
+// import Auth from '../service/congnitoAuth';
 // import FittedImage from 'react-fitted-image';
 
 const ReportHeader = (props) => {

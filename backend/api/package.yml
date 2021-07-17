@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: TeamReports API Stack
+Transform:
+- AWS::Serverless-2016-10-31
+Parameters:
+  ApiName:
+    Description: Name of the API
+    Type: String
+    Default: stage-tr-api
+  ApiSchema:
+    Description: Name of the API Schema
+    Type: String
+    Default: stage-tr-schema
+  SchemaLoc:
+    Description: S3 location of the Api Schema
+    Type: String
+    Default: s3://codepipeline-us-east-1-sbabs-user/teamreports/dev/teamreportsapi-schema.graphql
+  DynamoDBTableName:
+    Description: Existing Dynamodb table Name
+    Type: String
+    Default: SimpleSingleTable
+Resources:
+  GraphQLApi:
+    Type: AWS::AppSync::GraphQLApi
+    Properties:
+      AuthenticationType: API_KEY
+      Name:
+        Ref: ApiName
+      Tags:
+      - Key: Project
+        Value: teamreports
+  GraphQLSchema:
+    Type: AWS::AppSync::GraphQLSchema
+    Properties:
+      ApiId:
+        Fn::GetAtt:
+        - GraphQLApi
+        - ApiId
+      DefinitionS3Location:
+        Ref: SchemaLoc
+  GraphQLDataSource:
+    Type: AWS::AppSync::DataSource
+    Properties:
+      ApiId:
+        Fn::GetAtt:
+        - GraphQLApi
+        - ApiId
+      Description: Data source for the config parameters
+      DynamoDBConfig:
+        AwsRegion:
+          Ref: AWS::Region
+        TableName:
+          Ref: DynamoDBTableName
+      Name: ConfigDataSource
+      ServiceRoleArn:
+        Fn::GetAtt:
+        - AppSyncDynamoDBServiceRole
+        - Arn
+      Type: AMAZON_DYNAMODB
+  AppSyncDynamoDBServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: appsync.amazonaws.com
+          Action: sts:AssumeRole
+      Description: Allows Appsync to assume this role and perform CRUD operation on
+        DynamoDB
+      Policies:
+      - DynamoDBCrudPolicy:
+          tableName:
+            Ref: DynamoDBTableName
+      RoleName: AppSyncDynamoDBServiceRole
+      Tags:
+      - Key: Project
+        Value: teamreports
+Outputs:
+  GraphQLApiUrl:
+    Description: GraphQL Api URL
+    Value:
+      Fn::GetAtt:
+      - GraphQLApi
+      - GraphQLUrl

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import {Link, useHistory} from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import {Auth, Hub, Logger} from 'aws-amplify';
-import { LeftOutlined } from "@ant-design/icons";
+import { useHistory } from 'react-router-dom';
+import { Auth, Hub, Logger } from 'aws-amplify';
 
 const authChallengePathMap = {
   "NEW_PASSWORD_REQUIRED": "/registerconfirm"
@@ -27,10 +25,10 @@ const Login = (props) => {
     // }).catch(err => console.log(err));
 
     return function cleanup() {
-        logger.info("Removing HUB subscription to " + "auth");
-        Hub.remove("auth_channel", (data)=> {
-          console.log("Hub removing channel subscription at Login form")
-        });
+      logger.info("Removing HUB subscription to " + "auth");
+      Hub.remove("auth_channel", (data) => {
+        console.log("Hub removing channel subscription at Login form")
+      });
     };
   });
 
@@ -41,7 +39,7 @@ const Login = (props) => {
     let user = undefined
     try {
       user = await Auth.signIn(form.email.value, form.password.value);
-    } catch(error) {
+    } catch (error) {
       console.log(error)
       return
     }
@@ -50,7 +48,7 @@ const Login = (props) => {
       history.push(authChallengePathMap[user.challengeName]);
     else
       history.push('/home')
-    
+
 
     Hub.dispatch("auth_channel", {
       event: "sign_in",
@@ -69,36 +67,48 @@ const Login = (props) => {
   }
 
   return (
-    <div className="auth-wrapper">
-      <br />
-      <div className="auth-inner">
-        <form onSubmit={handleSubmit}>
-          <h3>Sign In</h3>
-
-          <div className="form-group">
-            <label>Email address</label>
-            <input type="email" name="email" className="form-control" placeholder="Enter email" />
-          </div>
-
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" name="password" className="form-control" placeholder="Enter password" />
-          </div>
-
-          <div className="form-group">
-            <div className="custom-control custom-checkbox">
-              <input type="checkbox" className="custom-control-input" id="customCheck1" />
-              <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-            </div>
-          </div>
-
-          <button type="submit" className="btn btn-dark btn-block">Submit</button>
-          <p className="forgot-password text-right">
-            Forgot <a href="#">password?</a>
-          </p>
-        </form>
+    <>
+      <div style={{ marginTop:'10px'}}>
+        <img
+          src="logo-greenletters.png"
+          width="200"
+          height="30"
+          style={{
+            objectFit: 'contain',
+          }}
+        />
       </div>
-    </div>
+      <div className="auth-wrapper">
+        <br />
+        <div className="auth-inner">
+          <form onSubmit={handleSubmit}>
+            <h3>Sign In</h3>
+
+            <div className="form-group">
+              <label>Email address</label>
+              <input type="email" name="email" className="form-control" placeholder="Enter email" />
+            </div>
+
+            <div className="form-group">
+              <label>Password</label>
+              <input type="password" name="password" className="form-control" placeholder="Enter password" />
+            </div>
+
+            <div className="form-group">
+              <div className="custom-control custom-checkbox">
+                <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+              </div>
+            </div>
+
+            <button type="submit" className="btn dark-button btn-block">Submit</button>
+            <p className="forgot-password text-right">
+              Forgot <a href="#">password?</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </>
   );
 }
 
